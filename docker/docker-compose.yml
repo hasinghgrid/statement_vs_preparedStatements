@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: sql-demo-db
+    ports:
+      - "3311:3306"  # Correct port mapping: expose MySQL on port 3311 locally
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demo_db
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Initialize the DB with init.sql
+    networks:
+      - sql-demo-network
+
+networks:
+  sql-demo-network:
+    driver: bridge
